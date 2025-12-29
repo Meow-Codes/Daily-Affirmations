@@ -1,0 +1,20 @@
+<div class="container" *ngIf="!loading">
+  <!-- Full-screen background image -->
+  <img [src]="backgroundUrl" class="bg-image" alt="Background" />
+
+  <div class="overlay"></div>
+
+  <div class="content" *ngIf="affirmation">
+    <h1 class="quote">{{ affirmation.text }}</h1>
+    <p class="author">- {{ affirmation.author }} -</p>
+
+    <div class="buttons">
+      <button class="btn" (click)="loadNew()">New Affirmation</button>
+      <button class="btn download" (click)="downloadImage()">Download Image</button>
+    </div>
+  </div>
+</div>
+
+<div class="loading" *ngIf="loading">
+  <h2>Loading your daily inspiration...</h2>
+</div>
