@@ -31,7 +31,10 @@ func main(){
 
 	handler := c.Handler(r)
 
-	port := "6942"
+	port := os.Getenv("PORT")
+    if port == "" {
+        port = "6942" // fallback for local dev
+    }
 	fmt.Printf("Backend Server starting at port %s.....", port)
 	log.Fatal(http.ListenAndServe(":"+port, handler))
 }
