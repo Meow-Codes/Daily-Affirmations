@@ -11,17 +11,27 @@ export interface Background {
   url: string;
 }
 
+export interface OnePieceResponse {
+  text: string;
+  author: string;
+  character?: string;  
+}
+
 @Injectable({
   providedIn: 'root'
 })
 export class AffirmationService {
-  private apiUrl = 'https://daily-affirmations-ithm.onrender.com/api';
+  private baseUrl = 'https://daily-affirmations-ithm.onrender.com/api';
 
   constructor(private http: HttpClient) {}
 
-  getDaily(): Observable<{ affirmation: Affirmation; background: Background }> {
-    const aff = this.http.get<Affirmation>(`${this.apiUrl}/affirmation`);
-    const bg = this.http.get<Background>(`${this.apiUrl}/background`);
+  getDaily(isOnePiece: boolean = false): Observable<any> {
+    const affEndpoint = isOnePiece ? '/onepiece' : '/affirmation';
+    const bgEndpoint = isOnePiece ? '/onepiece/background' : '/background';
+
+    const aff = this.http.get(isOnePiece ? `${this.baseUrl}${affEndpoint}` : `${this.baseUrl}${affEndpoint}`);
+    const bg = this.http.get<Background>(`${this.baseUrl}${bgEndpoint}`);
+
     return forkJoin({ affirmation: aff, background: bg });
   }
 }

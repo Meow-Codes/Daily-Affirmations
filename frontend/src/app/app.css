@@ -122,3 +122,16 @@ html, body {
     width: 80%;
   }
 }
+
+.mode-toggle {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  z-index: 3;
+}
+
+.btn.small {
+  padding: 0.8rem 1.5rem;
+  font-size: 1.2rem;
+  background: rgba(255,255,255,0.3);
+}
