@@ -1,6 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';  // ← Add ChangeDetectorRef
 import { CommonModule } from '@angular/common';
-import { DomSanitizer, SafeStyle } from '@angular/platform-browser'; // ← Added
 import { AffirmationService, Affirmation } from './services/affirmation';
 
 @Component({
@@ -8,19 +7,17 @@ import { AffirmationService, Affirmation } from './services/affirmation';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './app.html',
-  styleUrl: './app.css',
+  styleUrl: './app.css'
 })
 export class AppComponent implements OnInit {
-[x: string]: any;
   affirmation: Affirmation | null = null;
   backgroundUrl: string = '';
-  safeBackgroundStyle: SafeStyle | null = null; // ← New property for safe style
+  cacheBuster: number = 0;
   loading = true;
-  cacheBuster: number = Date.now();  // At class level
 
   constructor(
     private affService: AffirmationService,
-    private sanitizer: DomSanitizer // ← Inject DomSanitizer
+    private cdr: ChangeDetectorRef  // ← Inject it
   ) {}
 
   ngOnInit(): void {
@@ -36,28 +33,24 @@ export class AppComponent implements OnInit {
         console.log('✅ Success! Received data:', data);
         this.affirmation = data.affirmation;
         this.backgroundUrl = data.background.url;
-        this.cacheBuster = Date.now();  // Forces fresh load every time
-
-        // ADD THIS: cache-buster to force fresh image load every time
-        const uniqueUrl = `${this.backgroundUrl}&t=${Date.now()}`;
-
-        this.safeBackgroundStyle = this.sanitizer.bypassSecurityTrustStyle(`url(${uniqueUrl})`);
-
-        console.log('🖼 Background URL (with cache-buster):', uniqueUrl);
+        this.cacheBuster = Date.now();
 
         this.loading = false;
+
+        // ← THIS FORCES THE VIEW TO UPDATE IMMEDIATELY
+        this.cdr.detectChanges();
+
+        console.log('View forced to update');
       },
       error: (err) => {
         console.error('❌ API Error:', err);
-        console.error('Status:', err.status);
-        console.error('Message:', err.message);
-        console.error('Full error object:', err);
         this.loading = false;
-        alert('Failed to load affirmation. Check console (F12) for details.');
+        this.cdr.detectChanges();
+        alert('Failed to load. Check console for details.');
       },
       complete: () => {
         console.log('🏁 Request completed');
-      },
+      }
     });
   }
 
@@ -65,13 +58,12 @@ export class AppComponent implements OnInit {
     if (!this.backgroundUrl) return;
 
     fetch(this.backgroundUrl)
-      .then((res) => res.blob())
-      .then((blob) => {
+      .then(res => res.blob())
+      .then(blob => {
         const a = document.createElement('a');
         a.href = URL.createObjectURL(blob);
-        a.download = `daily-affirmation-${new Date().toISOString().slice(0, 10)}.jpg`;
+        a.download = `daily-affirmation-${new Date().toISOString().slice(0,10)}.jpg`;
         a.click();
-      })
-      .catch((err) => console.error('Download failed:', err));
+      });
   }
 }
