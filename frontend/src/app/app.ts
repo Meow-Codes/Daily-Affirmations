@@ -11,10 +11,12 @@ import { AffirmationService, Affirmation } from './services/affirmation';
   styleUrl: './app.css',
 })
 export class AppComponent implements OnInit {
+[x: string]: any;
   affirmation: Affirmation | null = null;
   backgroundUrl: string = '';
   safeBackgroundStyle: SafeStyle | null = null; // ← New property for safe style
   loading = true;
+  cacheBuster: number = Date.now();  // At class level
 
   constructor(
     private affService: AffirmationService,
@@ -34,6 +36,7 @@ export class AppComponent implements OnInit {
         console.log('✅ Success! Received data:', data);
         this.affirmation = data.affirmation;
         this.backgroundUrl = data.background.url;
+        this.cacheBuster = Date.now();  // Forces fresh load every time
 
         // ADD THIS: cache-buster to force fresh image load every time
         const uniqueUrl = `${this.backgroundUrl}&t=${Date.now()}`;
