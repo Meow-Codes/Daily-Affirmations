@@ -15,7 +15,7 @@ export interface Background {
   providedIn: 'root'
 })
 export class AffirmationService {
-  private apiUrl = 'http://localhost:6942/api';  // Your Go backend port
+  private apiUrl = 'https://daily-affirmations-ithm.onrender.com/';
 
   constructor(private http: HttpClient) {}
 
