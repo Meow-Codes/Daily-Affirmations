@@ -15,7 +15,7 @@ export interface Background {
   providedIn: 'root'
 })
 export class AffirmationService {
-  private apiUrl = 'https://daily-affirmations-ithm.onrender.com/';
+  private apiUrl = 'https://daily-affirmations-ithm.onrender.com/api';
 
   constructor(private http: HttpClient) {}
 
