@@ -93,7 +93,7 @@
   object-fit: cover; /* Like background-size: cover */
   z-index: 0;
 }
-    
+
 /* Responsive */
 @media (max-width: 768px) {
   .quote {
