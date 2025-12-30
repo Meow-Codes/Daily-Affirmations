@@ -23,11 +23,17 @@ func main(){
 	r.HandleFunc("/api/health", healthCheck).Methods("GET")
 
 	c := cors.New(cors.Options{
-		AllowedOrigins:   []string{"http://localhost:4200", "http://127.0.0.1:4200", "http://localhost:*"}, // more flexible
-		AllowedMethods:   []string{"GET", "POST", "OPTIONS"},
-		AllowedHeaders:   []string{"*"},
-		AllowCredentials: true,
-	})
+        AllowedOrigins: []string{
+            "https://dailyaffirmations26.netlify.app",
+            "https://www.dailyaffirmations26.netlify.app",
+            "https://daily-affirmations-ithm.onrender.com",
+            "*",
+        },
+        AllowedMethods:   []string{"GET", "POST", "OPTIONS"},
+        AllowedHeaders:   []string{"*"},
+        AllowCredentials: true,
+        Debug: true,
+    })
 
 	handler := c.Handler(r)
 
