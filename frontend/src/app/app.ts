@@ -30,47 +30,51 @@ export class AppComponent implements OnInit {
       'https://images8.alphacoders.com/788/thumb-1920-788705.jpg',
     ],
     zoro: [
-      'https://wall.alphacoders.com/big.php?i=606667',
-      'https://wall.alphacoders.com/big.php?i=1352217',
-      'https://wall.alphacoders.com/big.php?i=1338785',
-      'https://wall.alphacoders.com/big.php?i=1303127',
-      'https://wall.alphacoders.com/big.php?i=1326247',
-      'https://wall.alphacoders.com/big.php?i=931616',
-      'https://wall.alphacoders.com/big.php?i=932969',
+      'https://images8.alphacoders.com/135/thumb-1920-1352217.png',
+      'https://images2.alphacoders.com/130/thumb-1920-1303127.jpg',
+      'https://images3.alphacoders.com/905/thumb-1920-905276.jpg',
+      'https://images7.alphacoders.com/135/thumb-1920-1352213.png',
+      'https://images7.alphacoders.com/135/thumb-1920-1359196.jpeg',
+      'https://images3.alphacoders.com/134/thumb-1920-1345517.jpeg',
+      'https://images3.alphacoders.com/931/thumb-1920-931616.png',
     ],
     robin: [
-      'https://wall.alphacoders.com/big.php?i=1360727',
-      'https://wall.alphacoders.com/big.php?i=1300608',
-      'https://wall.alphacoders.com/big.php?i=1360725',
-      'https://wall.alphacoders.com/big.php?i=1355322',
-      'https://wall.alphacoders.com/big.php?i=1358562',
-      'https://wall.alphacoders.com/big.php?i=788704',
+      'https://images3.alphacoders.com/136/thumb-1920-1360727.png',
+      'https://images.alphacoders.com/136/thumb-1920-1360725.png',
+      'https://images3.alphacoders.com/135/thumb-1920-1355322.jpeg',
+      'https://images3.alphacoders.com/135/thumb-1920-1358562.jpeg',
+      'https://fwmedia.fandomwire.com/wp-content/uploads/2025/04/25014655/i_want_to_live.png',
     ],
     whitebeard: [
-      'https://wall.alphacoders.com/big.php?i=1173391',
-      'https://wall.alphacoders.com/big.php?i=1284982',
-      'https://wall.alphacoders.com/big.php?i=817020',
+      'https://images3.alphacoders.com/605/thumb-1920-605200.png',
+      'https://images.alphacoders.com/128/thumb-1920-1284982.jpg',
+      'https://images7.alphacoders.com/136/thumb-1920-1363893.png',
+      'https://images8.alphacoders.com/643/thumb-1920-643469.png',
+      'https://images5.alphacoders.com/649/thumb-1920-649986.jpg',
+      'https://images7.alphacoders.com/128/thumb-1920-1281115.jpg',
+      'https://images.alphacoders.com/127/thumb-1920-1273933.jpg',
+      'https://images.alphacoders.com/105/thumb-1920-1057850.jpg',
+      'https://images4.alphacoders.com/164/thumb-1920-164928.jpg',
+      'https://images.alphacoders.com/123/thumb-1920-1232363.png',
     ],
     roger: [
-      'https://wall.alphacoders.com/big.php?i=1323417',
-      'https://wall.alphacoders.com/big.php?i=1342768',
-      'https://wall.alphacoders.com/big.php?i=1205469',
-      'https://wall.alphacoders.com/big.php?i=1280625',
+      'https://images7.alphacoders.com/132/thumb-1920-1323417.jpeg',
+      'https://images7.alphacoders.com/120/thumb-1920-1205469.jpg',
+      'https://images.alphacoders.com/128/thumb-1920-1280625.jpg',
+      'https://images4.alphacoders.com/106/thumb-440-1060187.webp',
+      'https://images4.alphacoders.com/117/thumb-440-1171340.webp',
+      'https://images4.alphacoders.com/105/thumb-440-1054566.webp',
+      'https://images6.alphacoders.com/105/thumb-440-1057901.webp',
     ],
     adventure: [
-      'https://wall.alphacoders.com/big.php?i=911401',
-      'https://wall.alphacoders.com/big.php?i=1330380',
-      'https://wall.alphacoders.com/big.php?i=1346917',
-      'https://wall.alphacoders.com/big.php?i=1383107',
-      'https://wall.alphacoders.com/big.php?i=1043306',
-      'https://wall.alphacoders.com/big.php?i=860653',
+      'https://images6.alphacoders.com/911/thumb-1920-911401.jpg',
+      'https://images7.alphacoders.com/134/thumb-1920-1346917.png',
+      'https://images2.alphacoders.com/138/thumb-1920-1383107.png',
+      'https://images7.alphacoders.com/104/thumb-1920-1043306.jpg',
     ],
   };
 
-  constructor(
-    private affService: AffirmationService,
-    private cdr: ChangeDetectorRef
-  ) {}
+  constructor(private affService: AffirmationService, private cdr: ChangeDetectorRef) {}
 
   ngOnInit(): void {
     this.loadNew();
@@ -145,12 +149,16 @@ export class AppComponent implements OnInit {
   downloadImage(): void {
     if (!this.backgroundUrl || !this.affirmation) return;
 
-    const proxyUrl = (url: string) => `https://corsproxy.io/?${encodeURIComponent(url)}`;
+    // Best working proxy for images + canvas in 2025
+    const proxyUrl = (url: string) =>
+      `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(url)}`;
 
     let effectiveUrl = this.backgroundUrl;
     if (!this.isOnePieceMode) {
+      // Faster for Unsplash
       effectiveUrl = effectiveUrl.replace(/full|raw/, 'large');
     } else {
+      // Proxy all One Piece images
       effectiveUrl = proxyUrl(this.backgroundUrl);
     }
 
@@ -221,7 +229,7 @@ export class AppComponent implements OnInit {
     };
 
     img.onerror = () => {
-      alert('Failed to load image for download. Downloading raw background instead.');
+      alert('Image load failed. Downloading raw background only.');
       const a = document.createElement('a');
       a.href = this.backgroundUrl;
       a.download = `daily-affirmation-${new Date().toISOString().slice(0, 10)}.jpg`;
