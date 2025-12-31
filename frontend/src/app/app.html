@@ -5,27 +5,27 @@
     alt="Inspirational background"
   />
 
+  <!-- Subtle gradient overlay instead of solid blur box -->
   <div class="overlay"></div>
 
   <div class="content" *ngIf="affirmation">
     <h1 class="quote">{{ affirmation.text }}</h1>
     <p class="author">- {{ affirmation.author }} -</p>
 
-    <div class="buttons">
-      <button class="btn" (click)="loadNew()">New Affirmation</button>
-      <button class="btn download" (click)="downloadImage()">Download Image</button>
-    </div>
-    <div class="mode-toggle" *ngIf="!loading">
-      <button class="btn small" (click)="toggleOnePieceMode()">
-        {{ isOnePieceMode ? 'General Mode' : 'One Piece Mode 🏴‍☠️' }}
-      </button>
-    </div>
-    <p style="font-size: 1rem; opacity: 0.8; margin-top: 4rem; color: aliceblue">
-      • Inspired by the sea of dreams •
-    </p>
+    <div class="actions">
+      <button class="btn primary" (click)="loadNew()">New Affirmation</button>
+      <button class="btn secondary" (click)="downloadImage()">Download Image</button>
+    </div><br><br><br><br><br>
+
+    <p class="credit">Inspired by the sea of dreams</p>
   </div>
+
+  <button class="mode-toggle" (click)="toggleOnePieceMode()">
+    {{ isOnePieceMode ? '🌊 General' : '🏴‍☠️ One Piece' }}
+  </button>
 </div>
 
 <div class="loading" *ngIf="loading">
   <h2>Loading your daily inspiration...</h2>
+  <div class="spinner"></div>
 </div>

@@ -125,14 +125,92 @@ export class AppComponent implements OnInit {
   }
 
   downloadImage(): void {
-    if (!this.backgroundUrl) return;
-    fetch(this.backgroundUrl)
-      .then((res) => res.blob())
-      .then((blob) => {
-        const a = document.createElement('a');
-        a.href = URL.createObjectURL(blob);
-        a.download = `onepiece-affirmation-${new Date().toISOString().slice(0, 10)}.jpg`;
-        a.click();
+    if (!this.backgroundUrl || !this.affirmation) return;
+
+    const img = new Image();
+    img.crossOrigin = 'anonymous'; // Important for external images
+    img.src = this.backgroundUrl + '?t=' + this.cacheBuster; // Ensure fresh load
+
+    img.onload = () => {
+      const canvas = document.createElement('canvas');
+      canvas.width = img.width;
+      canvas.height = img.height;
+
+      const ctx = canvas.getContext('2d');
+      if (!ctx) return;
+
+      // Draw background image
+      ctx.drawImage(img, 0, 0);
+
+      // Dark semi-transparent overlay for readability
+      ctx.fillStyle = 'rgba(0, 0, 0, 0.5)';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      // Text styling
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+
+      // Quote
+      ctx.font = 'bold 80px "Playfair Display", Georgia, serif';
+      ctx.fillStyle = 'white';
+      ctx.shadowColor = 'black';
+      ctx.shadowBlur = 20;
+      ctx.shadowOffsetX = 4;
+      ctx.shadowOffsetY = 4;
+
+      // Wrap long text
+      const maxWidth = canvas.width * 0.8;
+      const lineHeight = 100;
+      const words = this.affirmation?.text.split(' ') || [];
+      const lines: string[] = [];
+      let currentLine = words[0];
+
+      for (let i = 1; i < words.length; i++) {
+        const testLine = currentLine + ' ' + words[i];
+        ctx.font = 'bold 80px "Playfair Display", Georgia, serif';
+        if (ctx.measureText(testLine).width < maxWidth) {
+          currentLine = testLine;
+        } else {
+          lines.push(currentLine);
+          currentLine = words[i];
+        }
+      }
+      lines.push(currentLine);
+
+      // Draw quote lines
+      const totalQuoteHeight = lines.length * lineHeight;
+      let y = canvas.height / 2 - totalQuoteHeight / 2;
+
+      lines.forEach((line) => {
+        ctx.fillText(line, canvas.width / 2, y);
+        y += lineHeight;
       });
+
+      // Author
+      ctx.font = 'italic 50px "Montserrat", sans-serif';
+      ctx.fillStyle = '#f0f0f0';
+      ctx.shadowBlur = 15;
+      if (this.affirmation) {
+        ctx.fillText(`— ${this.affirmation.author} —`, canvas.width / 2, y + 80);
+      }
+
+      // Trigger download
+      canvas.toBlob(
+        (blob) => {
+          if (!blob) return;
+          const a = document.createElement('a');
+          a.href = URL.createObjectURL(blob);
+          a.download = `daily-affirmation-${new Date().toISOString().slice(0, 10)}.jpg`;
+          a.click();
+          URL.revokeObjectURL(a.href);
+        },
+        'image/jpeg',
+        0.95
+      );
+    };
+
+    img.onerror = () => {
+      alert('Failed to load image for download. Try again.');
+    };
   }
 }
