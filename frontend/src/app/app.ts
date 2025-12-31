@@ -29,16 +29,16 @@ export class AppComponent implements OnInit {
 
   private characterImages: { [key: string]: string[] } = {
     luffy: [
-      'https://wall.alphacoders.com/big.php?i=1358580', // Gear 5 epic
-      'https://wall.alphacoders.com/big.php?i=1323165', // Gear 5 action
-      'https://wall.alphacoders.com/big.php?i=1369365', // Recent stunning
-      'https://wall.alphacoders.com/big.php?i=1342304', // Adventure vibe
-      'https://wall.alphacoders.com/big.php?i=1404838', // With giants (new 2025)
-      'https://wall.alphacoders.com/big.php?i=1352212', // Classic power
-      'https://wall.alphacoders.com/big.php?i=1345518', // King of Pirates pose
-      'https://wall.alphacoders.com/big.php?i=1332278', // Gear 5 transformation
-      'https://wall.alphacoders.com/big.php?i=682881', // Iconic smile
-      'https://wall.alphacoders.com/big.php?i=788705', // RoninGFX art
+      'https://images2.alphacoders.com/135/thumb-1920-1358580.jpeg', // Gear 5 epic
+      'https://images3.alphacoders.com/132/thumb-1920-1323165.png', // Gear 5 action
+      'https://images2.alphacoders.com/136/thumb-1920-1369365.jpeg', // Recent stunning
+      'https://images3.alphacoders.com/134/thumb-1920-1342304.jpeg', // Adventure vibe
+      'https://images7.alphacoders.com/135/thumb-1920-1350478.jpeg', // With giants (new 2025)
+      'https://images3.alphacoders.com/164/thumb-1920-164959.jpg', // Classic power
+      'https://images4.alphacoders.com/134/thumb-1920-1345518.jpeg', // King of Pirates pose
+      'https://images8.alphacoders.com/133/thumb-1920-1332278.jpeg', // Gear 5 transformation
+      'https://images7.alphacoders.com/682/thumb-1920-682881.jpg', // Iconic smile
+      'https://images8.alphacoders.com/788/thumb-1920-788705.jpg', // RoninGFX art
     ],
     zoro: [
       'https://wall.alphacoders.com/big.php?i=606667', // Classic swordsman
